@@ -1,0 +1,3 @@
+[submodule "aws-app-mesh-examples"]
+	path = aws-app-mesh-examples
+	url = https://github.com/aws/aws-app-mesh-examples
