@@ -75,6 +75,20 @@ spec:
     matchLabels:
       mesh: yelb
 EOF
+
+# check the appmesh exists
+kubectl apply -f awscli.yaml
+kubectl wait --for=condition=complete --timeout=30s job/awscli
+kubectl logs jobs/awscli
+```
+
+### Create AppMesh components for Yelb
+```shell
+kubectl apply -f infrastructure/appmesh_templates/appmesh-yelb-redis.yaml
+kubectl apply -f infrastructure/appmesh_templates/appmesh-yelb-db.yaml
+kubectl apply -f infrastructure/appmesh_templates/appmesh-yelb-appserver.yaml
+kubectl apply -f infrastructure/appmesh_templates/appmesh-yelb-ui.yaml
+
 ```
 
 ## Resources
