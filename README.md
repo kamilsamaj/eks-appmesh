@@ -34,7 +34,7 @@ aws iam put-role-policy --role-name $ROLE_NAME --policy-name AppMesh-Policy-For-
 
 # test the access to appmesh
 kubectl apply -f awscli.yaml
-kubectl get jobs
+kubectl wait --for=condition=complete --timeout=30s jobs/awscli
 kubectl logs jobs/awscli
 ```
 
@@ -75,11 +75,6 @@ spec:
     matchLabels:
       mesh: yelb
 EOF
-
-# check the appmesh exists
-kubectl apply -f awscli.yaml
-kubectl wait --for=condition=complete --timeout=30s job/awscli
-kubectl logs jobs/awscli
 ```
 
 ### Create AppMesh components for Yelb
@@ -88,6 +83,10 @@ kubectl apply -f infrastructure/appmesh_templates/appmesh-yelb-redis.yaml
 kubectl apply -f infrastructure/appmesh_templates/appmesh-yelb-db.yaml
 kubectl apply -f infrastructure/appmesh_templates/appmesh-yelb-appserver.yaml
 kubectl apply -f infrastructure/appmesh_templates/appmesh-yelb-ui.yaml
+
+
+# restart pods with (press CTRL+C to exit the command)
+kubectl -n yelb delete pods --all
 
 ```
 
